@@ -1,8 +1,17 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+import joblib
+import os
 
-X = [[1],[2],[3],[4]]
-y = [2,4,6,8]
+os.makedirs("model", exist_ok=True)
 
-model = LinearRegression().fit(X, y)
-print("Prediction for 5:", model.predict([[5]])[0])
+data = pd.read_csv("data/data.csv")
+X = data[["x"]]
+y = data["y"]
+
+model = LinearRegression()
+model.fit(X, y)
+
+joblib.dump(model, "model/model.pkl")
+
+print("Model trained!")
